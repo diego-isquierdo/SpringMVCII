@@ -22,7 +22,7 @@ public class HomeController {
 
 	@RequestMapping("/")
 	//habilitando o cache do BD - Precisa anotar AppWebConfiguration com @EnableCaching - habilita o cache
-	@Cacheable(value = "produtoHome")
+	@Cacheable(value = "produtosHome")
     public ModelAndView index(){
         List<Produto> produtos = produtoDao.listar();
         ModelAndView modelAndView = new ModelAndView("home");

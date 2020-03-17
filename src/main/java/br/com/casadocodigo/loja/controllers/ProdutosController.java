@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -77,6 +78,7 @@ public class ProdutosController {
 	//de duplicar via F5 o envio de formulario
 	//Obs.: o metodo deve receber os parâmetros nesta ordem. senão não rola
 	//MultpartFile > tratando o arquivo que virá por upload
+	@CacheEvict(value = "produtosHome", allEntries = true) //>>> limpa o cache antes de gravar no novo item - Atualiza o cache	
 	public ModelAndView gravar(MultipartFile sumario, @Valid Produto produto, BindingResult result, RedirectAttributes redirectAttributes){
 		//BindingResult já possui o resultado de totdo o processo de validação - Validator
 		
