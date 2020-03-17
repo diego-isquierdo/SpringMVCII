@@ -1,5 +1,7 @@
 package br.com.casadocodigo.loja.conf;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.cache.CacheBuilder;
@@ -17,10 +19,13 @@ import org.springframework.format.datetime.DateFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.jmx.export.metadata.ManagedResource;
+import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import br.com.casadocodigo.loja.controllers.HomeController;
@@ -120,6 +125,24 @@ public class AppWebConfiguration {
 		manager.setCacheBuilder(builder);
 
 		return manager;
+	}
+
+	//configurando a Resposta do sistema. Cofnigurar se o mesmo vai responder
+	//como HTML ou JSON
+	@Bean
+	public ViewResolver contentNegociationViewResolver(ContentNegotiationManager manager){
+		//criando uma lista de ViewResolver - HTML, JSON
+		List<ViewResolver> viewResolvers = new ArrayList<>();
+		//resolve o HTML
+		viewResolvers.add(internalResourceViewResolver());
+		//resolve o JSON
+		viewResolvers.add(new JsonViewResolver());
+
+		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+		resolver.setViewResolvers(viewResolvers);
+		resolver.setContentNegotiationManager(manager);
+
+		return resolver;
 	}
 
 }

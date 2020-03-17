@@ -21,7 +21,9 @@ public class HomeController {
     ProdutoDAO produtoDao;
 
 	@RequestMapping("/")
-	//habilitando o cache do BD - Precisa anotar AppWebConfiguration com @EnableCaching - habilita o cache
+    //habilitando o cache do BD - Precisa anotar AppWebConfiguration com @EnableCaching - habilita o cache
+    //chamando via GET o 'link.json' retorna json
+    //chamando via GET apenas o link retorna HTML
 	@Cacheable(value = "produtosHome")
     public ModelAndView index(){
         List<Produto> produtos = produtoDao.listar();
