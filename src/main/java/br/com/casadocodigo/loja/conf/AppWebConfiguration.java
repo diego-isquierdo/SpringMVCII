@@ -1,8 +1,13 @@
 package br.com.casadocodigo.loja.conf;
 
+import java.util.concurrent.TimeUnit;
+
+import com.google.common.cache.CacheBuilder;
+
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
+import org.springframework.cache.guava.GuavaCacheManager;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -99,10 +104,22 @@ public class AppWebConfiguration {
 		return new RestTemplate();
 	}
 
-	//metodo que cria o cache
+	//metodo que cria o cache - CacheManager não pode ser usado um produção
+	//cache em produção utilizar o 'Guava' do Google
 	@Bean
 	public CacheManager cacheManager(){
-		return new ConcurrentMapCacheManager();
+		/** configurando o Cache
+		 * - ativo por 5 minutos
+		 * - guarda até 100 elementos
+		 * Obs.: config básica p testes em desenvolvimento
+		 */
+		CacheBuilder<Object, Object> builder = CacheBuilder.newBuilder()
+			.maximumSize(100)
+			.expireAfterAccess(5, TimeUnit.MINUTES);
+		GuavaCacheManager manager = new GuavaCacheManager();
+		manager.setCacheBuilder(builder);
+
+		return manager;
 	}
 
 }
