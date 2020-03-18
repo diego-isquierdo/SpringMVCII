@@ -18,9 +18,11 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletInitializer{
 
+	//configurações que devem subir junto com a aplicação
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return null;
+		//Array de classes de configuração 
+		return new Class[]{SecurityConfiguration.class};
 	}
 
 	//determina as próximas classes de configuração - 01 > aplicação e 01 > Banco de Dados
