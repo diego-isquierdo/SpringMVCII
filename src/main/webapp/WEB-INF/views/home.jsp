@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html>
@@ -34,8 +35,13 @@
 			<div id="header-content">
 				<nav id="main-nav">
 					<ul class="clearfix">
-						<li><a href="${s:mvcUrl('PC#listar').build() }" rel="nofollow"></a>Lista de Produtos</li>
-						<li><a href="${s:mvcUrl('PC#form').build()}" rel="nofollow"></a>Cadastro de Produtos</li>
+					<!--Configurando seg - links deverão estar disponíveis apenas com o usr logado 
+						dentro da tag <security:autorize> ficará o conteúdo sensível
+							access="hasRole('ROLE_ADMIN')" - especificando o usr ADM-->
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+								<li><a href="${s:mvcUrl('PC#listar').build() }" rel="nofollow">Listagem de Produtos</a></li>
+								<li><a href="${s:mvcUrl('PC#form').build() }" rel="nofollow">Cadastro de Produtos</a></li>
+							</sec:authorize>
 						<li><a href="${s:mvcUrl('CCC#itens').build() }" rel="nofollow">Carrinho (${carrinhoCompras.quantidade })</a></li>
 						<li><a href="/pages/sobre-a-casa-do-codigo" rel="nofollow">Sobre Nós</a></li>
 						<li><a href="/pages/perguntas-frequentes" rel="nofollow">Perguntas Frequentes</a></li>
