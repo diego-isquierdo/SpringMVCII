@@ -43,8 +43,10 @@
 			<ul class="nav navbar-nav navbar-right">
 			  <li>
 				<a href="#"> 
-					<!--"principal" - usuario logado-->
-					<sec:authentication property="principal.username" />
+					<!--"principal" - usuario logado -->
+					<security:authentication property="principal" var="usuario"/>
+					Usuário: ${usuario.username}
+					<a href="${contextPath}logout">Sair</a>
 				</a></li>
 			</ul>
 		</div>

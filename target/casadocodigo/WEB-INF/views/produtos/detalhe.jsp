@@ -81,7 +81,9 @@
 		<section class="buy-options clearfix">
 				<!-- Otimizando o caminho via url -->
 				<!-- utilizando o form do spring para resolver o erro de CSRF 
-				pois o spring já gera um input hidden com o token para o csrf-->
+				pois o spring já gera um input hidden com o token para o csrf
+				- csrf - controle por token pra evitar request forjada por outro
+				site de algum invasor-->
 			<form:form servletRelativeAction="/carrinho/add" method="post" cssClass="container">
 				<input type="hidden" value="${produto.id }" name="produtoId" >
 				<ul id="variants" class="clearfix">
