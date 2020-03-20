@@ -47,7 +47,7 @@
 			  </a>
 			</li>
 			<li class="nav-item">
-				<a href="<c:url value="/logout" />">Sair</a></span>
+				<a href="${contextPath}logout">Sair</a>
 			</li>
 		  </ul>
 		  </div><!-- /.navbar-collapse -->
