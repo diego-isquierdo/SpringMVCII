@@ -3,6 +3,7 @@
 os atributso são passados como parâmetros -->
 <%@ attribute name="bodyClass" required="false" %>
 <%@ attribute name="titulo" required="true" %>
+<%@ attribute name="extraScripts" fragment="true" %>
 
 <!-- pag template é reponsável por todo conteúdo de configuração "estático" 
 e repetitivo. O conteúdo variável ficará nas outras JSPs, que serão "chamadas por tags
@@ -37,14 +38,15 @@ Temple funciona como um objeto que é "chamado" na JSP e recepe atributos por pa
 </head>
 <body class="${bodyClass }">
 
-<%@include file="/WEB-INF/views/cabecalho.jsp" %>
+	<%@include file="/WEB-INF/views/cabecalho.jsp" %>
 
-<!-- Recebe o conteúdo da JSP mencionado entre as tags <tags:pageTemplad></tags:pageTemplate> -->
-<jsp:doBody />
+	<!-- Recebe o conteúdo da JSP mencionado entre as tags <tags:pageTemplad></tags:pageTemplate> -->
+	<jsp:doBody />
 
+	<!--Fragmentos servem para acrescentar info variada nas JSPs
+		incluindo scripts padrões nas pg em forma de fragmentos-->
+	 <jsp:invoke fragment="extraScripts"></jsp:invoke>
 
-
-<%@include file="/WEB-INF/views/rodape.jsp" %>
-
+    <%@ include file="/WEB-INF/views/rodape.jsp" %>
 </body>
 </html>
