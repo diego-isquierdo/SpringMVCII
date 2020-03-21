@@ -3,10 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 
-<!-- Incluindo o cabeçalho via cabecalho.jsp-->
-<%@include file="/WEB-INF/views/cabecalho.jsp" %>
+<tags:pageTemplate titulo="${produto.titulo}" bodyClass="${'produto'}">
 
 	<article id="livro-css-eficiente">
 		<header id="product-highlight" class="clearfix">
@@ -73,5 +73,4 @@
 			</section>
 		</div>
 	</article>
-
-	<%@include file="/WEB-INF/views/rodape.jsp" %>
+</tags:pageTemplate>

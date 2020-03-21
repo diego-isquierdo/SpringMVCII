@@ -2,11 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<!-- tag que habilita a template -->
+<%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 
-<!-- Importando o cabeçalho da pg cabecalho.jsp-->
-<%@include file="/WEB-INF/views/cabecalho.jsp" %>
-
+<tags:pageTemplate titulo="Livros de Java, Android, IOs, Mobile e muito mais...">
 	<section id="index-section" class="container middle">
 		<h1 class="cdc-call">Últimos dias com os preços promocionais. Aproveite!</h1>
 		
@@ -58,5 +58,6 @@
 
 	</section>
 
-<%@include file="/WEB-INF/views/rodape.jsp" %>
+</tags:pageTemplate>
+
 

@@ -2,10 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
-<!-- Importando o cabeçalho da pg cabecalho.jsp-->
-<%@include file="/WEB-INF/views/cabecalho.jsp" %>
 
+<tags:pageTemplate titulo="${produto.titulo}" bodyClass="${'produto'}">
 	<section class="container middle">
 		<h2 id="cart-title">Seu carrinho de compras</h2>
 		<table id="cart-table">
@@ -75,4 +75,6 @@
 			<a href="http://www.casadocodigo.com.br">Veja todos os livros que publicamos!</a>
 		</h2>
 	</section>
-	<%@include file="/WEB-INF/views/rodape.jsp" %>
+
+
+	</tags:pageTemplate>
