@@ -2,8 +2,11 @@ package br.com.casadocodigo.loja.conf;
 
 import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -49,5 +52,16 @@ public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletI
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
 		registration.setMultipartConfig(new MultipartConfigElement(""));
+	}
+	
+	
+	//definindo as rotas de teste e desenvolvimento > 'test' 'dev'
+	@Override
+	public void onStartup(ServletContext servletContext) throws ServletException {
+		super.onStartup(servletContext);
+		//spring "ouvindo" pos eventos
+		servletContext.addListener(RequestContextListener.class);
+		//definindo o profile 'dev' com o principál - desenvolvimento
+		servletContext.setInitParameter("spring.profiles.active", "dev");
 	}
 }

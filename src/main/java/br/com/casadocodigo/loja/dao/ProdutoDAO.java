@@ -1,14 +1,17 @@
 package br.com.casadocodigo.loja.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.casadocodigo.loja.models.Produto;
+import br.com.casadocodigo.loja.models.TipoPreco;
 
 /**Classeo DAO são responsáveis pelo acesso às entidades do banco
  * 
@@ -42,5 +45,16 @@ public class ProdutoDAO {
 				+ "join fetch p.precos preco where p.id = :id", Produto.class)
 				.setParameter("id", id)
 				.getSingleResult();
+	}
+
+
+	//Relatório de vendas
+	public BigDecimal somaPrecosPorTipoPreco(TipoPreco tipoPreco){
+		TypedQuery<BigDecimal> query =  manager
+			.createQuery("select sum(preco.valor) from Produto p "
+			+ "join p.precos preco where preco.tipo = :tipoPreco", BigDecimal.class);
+		
+			query.setParameter("tipoPreco", tipoPreco);
+			return query.getSingleResult();
 	}
 }

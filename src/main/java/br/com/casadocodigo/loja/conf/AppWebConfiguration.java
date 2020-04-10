@@ -54,7 +54,7 @@ import br.com.casadocodigo.loja.models.CarrinhoCompras;
 		FileSaver.class, CarrinhoCompras.class})
 
 //habilita o cache		
-@EnableCaching
+//@EnableCaching //>>>comentar essa notação para testes no JUnit
 //WebMvcConfigurerAdapter - auxilia no mapeamento dos arquivos js e css
 public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 	
