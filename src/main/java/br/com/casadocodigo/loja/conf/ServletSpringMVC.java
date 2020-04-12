@@ -26,7 +26,8 @@ public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletI
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		//Array de classes de configuração 
-		return new Class[]{SecurityConfiguration.class,AppWebConfiguration.class, JPAConfiguration.class};
+		return new Class[]{SecurityConfiguration.class,AppWebConfiguration.class, 
+							JPAConfiguration.class, JPAProductionConfiguration.class};
 	}
 
 	//determina as próximas classes de configuração - 01 > aplicação e 01 > Banco de Dados
@@ -55,7 +56,10 @@ public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletI
 		registration.setMultipartConfig(new MultipartConfigElement(""));
 	}
 	
-	
+	/*
+
+	Criado arquvo Procfile com as configurações p o Heroku
+
 	//definindo as rotas de teste e desenvolvimento > 'test' 'dev'
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
@@ -64,5 +68,7 @@ public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletI
 		servletContext.addListener(RequestContextListener.class);
 		//definindo o profile 'dev' com o principál - desenvolvimento
 		servletContext.setInitParameter("spring.profiles.active", "dev");
-	}
+	}*/
+
+
 }
