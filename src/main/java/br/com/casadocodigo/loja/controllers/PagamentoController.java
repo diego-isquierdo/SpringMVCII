@@ -3,6 +3,9 @@ package br.com.casadocodigo.loja.controllers;
 import java.util.concurrent.Callable;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.casadocodigo.loja.models.CarrinhoCompras;
 import br.com.casadocodigo.loja.models.DadosPagamento;
+import br.com.casadocodigo.loja.models.Usuario;
+
 
 /**
  * Processo de pagamento ocorre como envio de um JSON com index "value" e um valor numérico > {"value":100}
@@ -35,10 +40,19 @@ public class PagamentoController {
 	@Autowired
 	private RestTemplate restTemplate;
 	
+	@Autowired
+	private MailSender sender;
+	
+	
+	
 	//"/pagamento/finalizar"
 	@RequestMapping(value="/finalizar", method = RequestMethod.POST)
-														//flash > para enviar info de pagamento OK
-	public Callable<ModelAndView> finalizar(RedirectAttributes model) {
+															
+										//recebendo o usuario p envio do email
+										//AuthenticationPrincipal - Spring injeta o usuario
+	public Callable<ModelAndView> finalizar(@AuthenticationPrincipal Usuario usuario,
+											//flash > para enviar info de pagamento OK
+												RedirectAttributes model) {
 		/**REQUISIÇÃO - ASSÍNCRONA
 		 * 
 		 * Callable auxilia na comunicação 'assincrona' > trabalhando com as rsquests de forma concorrente
@@ -59,6 +73,9 @@ public class PagamentoController {
 				
 				System.out.println(response);
 	
+				//add envio de email ao cliente informando sobre a finalização do 
+				enviaEmailCompraProduto(usuario);
+				
 				//parâmetro 'mensagem' é como o valor será esgatao na JSP 
 				model.addFlashAttribute("sucesso", response);
 				return new ModelAndView("redirect:/produtos");
@@ -70,4 +87,17 @@ public class PagamentoController {
 			}	
 		}; 			//necessário ";" pois se trata de um 'return'	
 	}
+
+	private void enviaEmailCompraProduto(Usuario usuario) {
+		SimpleMailMessage email = new SimpleMailMessage();
+	
+		email.setSubject("Compra finalizada com sucesso");
+		email.setTo("diego.isquierdo@hotmail.com");
+		email.setText("Compra aprovada com sucesso no valor de " + carrinho.getTotal());
+		email.setFrom("vellhojoaquimteixeira@gmail.com");
+	
+		sender.send(email);
+	  }
+
+
 }

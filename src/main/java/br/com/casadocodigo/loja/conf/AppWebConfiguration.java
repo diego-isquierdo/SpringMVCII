@@ -2,6 +2,7 @@ package br.com.casadocodigo.loja.conf;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.cache.CacheBuilder;
@@ -19,6 +20,8 @@ import org.springframework.format.datetime.DateFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.jmx.export.metadata.ManagedResource;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartResolver;
@@ -54,7 +57,7 @@ import br.com.casadocodigo.loja.models.CarrinhoCompras;
 		FileSaver.class, CarrinhoCompras.class})
 
 //habilita o cache		
-//@EnableCaching //>>>comentar essa notação para testes no JUnit
+@EnableCaching //>>>comentar essa notação para testes no JUnit
 //WebMvcConfigurerAdapter - auxilia no mapeamento dos arquivos js e css
 public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 	
@@ -169,6 +172,23 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 	@Bean
 	public LocaleResolver localeResolver(){
 		return new CookieLocaleResolver();
+	}
+
+	@Bean
+	public MailSender mailSender(){
+		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+		
+		mailSender.setHost("smtp.gmail.com");
+		mailSender.setUsername("vellhojoaquimteixeira@gmail.com");
+		mailSender.setPassword("#sextou#pas");
+		mailSender.setPort(587);
+	
+		Properties mailProperties = new Properties();
+		mailProperties.put("mail.smtp.auth", true);
+		mailProperties.put("mail.smtp.starttls.enable", true);
+	
+		mailSender.setJavaMailProperties(mailProperties);
+		return mailSender;
 	}
 
 }

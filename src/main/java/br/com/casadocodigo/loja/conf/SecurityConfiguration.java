@@ -34,6 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         //** - relaciona todos os itens após a '/'' /
         .antMatchers("/produtos/form").hasRole("ADMIN")
         .antMatchers("/carrinho/**").permitAll()
+        .antMatchers("/pagamento/**").permitAll()
         .antMatchers(HttpMethod.GET, "/produtos").permitAll()
         .antMatchers(HttpMethod.POST, "/produtos").hasRole("ADMIN")
         .antMatchers("/produtos/**").permitAll()

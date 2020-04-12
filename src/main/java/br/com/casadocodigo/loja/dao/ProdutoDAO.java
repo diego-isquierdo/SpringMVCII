@@ -34,7 +34,7 @@ public class ProdutoDAO {
 	//trabalhando com tipos diferentes de preço - formando ujma lista
 	public List<Produto> listar() {
 		//getResultList() retorna o resultado da busca createQuery em forma de List
-		return manager.createQuery("select p from Produto p", Produto.class)
+		return manager.createQuery("select distinct(p) from Produto p join fetch p.precos", Produto.class)
 				.getResultList();
 	}
 
