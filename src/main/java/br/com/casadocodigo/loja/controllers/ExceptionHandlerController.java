@@ -10,13 +10,13 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class ExceptionHandlerController {
 
-    //tratando erro ao consutltar produtos direto na url
+    //tratando erro ao consultar produtos direto na url
 	//tratando as exceptions de null
 	@ExceptionHandler(Exception.class)
 	public ModelAndView trataExceptionGenerica(Exception exception){
         exception.printStackTrace();
 
-        //alterado de String para ModelAndView
+
         //apenas para enviar para a pg qual exceção ocorreu
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("exception", exception);
